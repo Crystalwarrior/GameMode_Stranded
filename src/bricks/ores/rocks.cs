@@ -11,6 +11,7 @@ datablock fxDTSBrickData( oreBrickData : brick4xCubeData )
 	isOre = true;
 	adminOnly = true;
 	ore = "iron gold copper";
+	spoils = "rock pebbles";
 	resources = 60;
 	respawn = 10;
 };
@@ -49,6 +50,15 @@ function fxDTSBrick::onPickaxeHit( %this, %client )
 		%client.updateInfo();
 
 		commandToClient( %client, 'centerPrint', "<font:Courier:20>\c6+\c3" @ %amt SPC "\c6" SPC %this.ore @ "!", 0.5 );
+	}
+	else
+	{
+		%data = %this.getDatablock();
+		%amt = getRandom(1, 3);
+		%rnd = getRandom(0, getWordCount(%data.spoils) - 1);
+		%ore = getWord(%data.spoils, %rnd);
+		%client.resources[ %ore ] += %amt;
+		commandToClient( %client, 'centerPrint', "<font:Courier:20>\c6+\c3" @ %amt SPC "\c6" SPC %ore @ "!", 0.5 );
 	}
 
 	if( %this.resources <= 0 )
@@ -114,6 +124,7 @@ package oreBrickPackage
 		}
 		if(isObject(%this))
 		{
+			%this.resources = %this.getDatablock().resources;
 			if(getWordCount(%this.getDatablock().ore) > 1)
 			{
 				%rnd = getRandom(0, getWordCount(%this.getDatablock().ore) - 1);

@@ -27,3 +27,4 @@ exec("./src/bricks/ores/trees.cs");
 
 exec("./src/items/axe.cs");
 exec("./src/items/pickaxe.cs");
+exec("./src/items/spoils.cs");

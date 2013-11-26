@@ -247,7 +247,7 @@ package treeBrickpackage
 activatePackage(oreBrickPackage);
 
 function fxDTSBrick::handleTreeSpawn(%this) {
-	if(%this.getDatablock().isTree) {
+	if(%this.isTree) {
 		announce("Tree!");
 		%this.resources = %data.resources;
 		%this.disappear(0);
